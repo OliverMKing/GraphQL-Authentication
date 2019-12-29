@@ -1,10 +1,10 @@
 {
   "name": "users",
   "version": "1.0.0",
-  "description": "Starter pack for an auth-included graphql project",
+  "description": "A GraphQL authentication starter project to built on",
   "repository": {
     "type": "git",
-    "url": "github.com/stephengrider"
+    "url": "github.com/OliverMKing/GraphQL-Authentication"
   },
   "main": "index.js",
   "scripts": {
