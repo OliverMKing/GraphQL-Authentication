@@ -13,7 +13,7 @@ const app = express();
 
 // Replace with your mongoLab URI
 const MONGO_URI =
-  "mongodb+srv://admin:admin@graphqllogin-idnqp.mongodb.net/test?retryWrites=true&w=majority";
+  "mongodb+srv://test:test@graphqllogin-idnqp.mongodb.net/test?retryWrites=true&w=majority";
 
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise;
@@ -24,21 +24,20 @@ mongoose.connect(MONGO_URI);
 mongoose.connection
   .once("open", () => console.log("Connected to MongoLab instance."))
   .on("error", error => console.log("Error connecting to MongoLab:", error));
+const db = mongoose.connection;
 
 // Configures express to use sessions.  This places an encrypted identifier
 // on the users cookie.  When a user makes a request, this middleware examines
 // the cookie and modifies the request object to indicate which user made the request
 // The cookie itself only contains the id of a session; more data about the session
 // is stored inside of MongoDB.
+
 app.use(
   session({
     resave: true,
     saveUninitialized: true,
     secret: "aaabbbccc",
-    store: new MongoStore({
-      url: MONGO_URI,
-      autoReconnect: true
-    })
+    store: new MongoStore({ mongooseConnection: db, autoReconnect: true })
   })
 );
 
